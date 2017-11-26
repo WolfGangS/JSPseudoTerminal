@@ -233,6 +233,7 @@ function prompt() {
     write(p, "#00f");
     write("$ ");
     calcInputWidth();
+    forceScroll();
     BUSY = false;
 }
 
@@ -305,11 +306,8 @@ function writeLine(text) {
 }
 
 function forceScroll() {
-    return;
-    window.scrollTo(0, document.body.scrollHeight);
-    while (window.scrollMaxY > 2000) {
-        $(".line").first().remove();
-    }
+    var offset = $("input#input").offset().top - $(window).scrollTop();
+    $('html,body').animate({scrollTop: offset}, 0);
 }
 
 $(document).ready(function() {
