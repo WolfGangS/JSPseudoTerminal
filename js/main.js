@@ -259,7 +259,7 @@ function writeSlow(text, col, cb) {
     }
     sp.appendTo(".display");
     var tm = window.setInterval(function() {
-        sp.text(text.substring(0, ++i));
+        sp.html(text.substring(0, ++i));
         if (i >= text.length) {
             window.clearInterval(tm);
             cb();
