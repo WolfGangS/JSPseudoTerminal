@@ -1,0 +1,25 @@
+   /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\
+  /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\
+ ||                                                               ||
+ ||     Welcome to wlf.io                   (Wolfgang von Caron)  ||
+ ||                                                               ||
+ ||                                                               ||
+ ||        This site mimics a rudimentry nix commandline          ||
+ ||                                                               ||
+ ||        I will gradually be adding more and more programs      ||
+ ||                                                               ||
+ ||        For now I have created :                               ||
+ ||                                                               ||
+ ||            ls            chmod *      mkdir                   ||
+ ||            cd            chown *                              ||
+ ||            cat           sudo *                               ||
+ ||            tail          su *                                 ||
+ ||            touch         wait                                 ||
+ ||            wget *        ping *                               ||
+ ||                                                               ||
+ ||                              (*) not finished                 ||
+ ||                                                               ||
+ ||        They all take standard arguemenu inputs (see: --help)  ||
+ ||                                                               ||
+  \= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/
+   \= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/

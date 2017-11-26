@@ -1,0 +1,4 @@
+Welcome to WLF IO v0.1.2 LTNS (Little To No Support) (JQuery JS 3.2.1)
+
+ * Try the command help to see what you can do
+ 

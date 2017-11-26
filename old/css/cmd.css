@@ -1,0 +1,66 @@
+body {
+    background-color: #000;
+    overflow-x: hidden;
+}
+
+p {
+    margin: 0;
+    font-size: 1em;
+    font-family: "Courier New", Courier, monospace;
+    color: #fff;
+    white-space: pre-wrap;
+}
+
+pre {
+	display: inline-block;
+    font: bold 8px/5px monospace;
+    color: #000;
+    clear: left;
+    color: #333;
+    margin: 0;
+}
+
+.user {
+    color: #0f0;
+}
+
+.user::after {
+    content: "@";
+}
+
+.domain {
+    color: #0f0;
+}
+
+.domain::after {
+    content: ":";
+    color: #fff;
+}
+
+.path {
+    color: #00f;
+}
+
+.path::after {
+    content: "$";
+    color: #fff;
+}
+
+.input {
+    color: #fff;
+}
+
+.input::before {
+    content: " ";
+}
+
+.current-input::after {
+    content: "_";
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
