@@ -1,4 +1,4 @@
-Welcome to WLF IO v0.1.2 LTNS (Little To No Support) (JQuery JS 3.2.1)
+Welcome to <a href="https://github.com/WolfGangS/JSPseudoTerminal" target="_blank">WLF IO JSPseudoTerminal v0.1.2 LTNS</a> (Little To No Support) (JQuery JS 3.2.1)
 
  * Try the command help to see what you can do
  
