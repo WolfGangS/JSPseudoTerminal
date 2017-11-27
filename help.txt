@@ -11,7 +11,7 @@
  ||        For now I have created :                               ||
  ||                                                               ||
  ||            ls            chmod *      mkdir                   ||
- ||            cd            chown *                              ||
+ ||            cd            chown *      rm                      ||
  ||            cat           sudo *                               ||
  ||            tail          su *                                 ||
  ||            touch         wait                                 ||
