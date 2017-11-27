@@ -232,7 +232,7 @@ class LSApp extends BaseApp {
                     }
 
                     if (this.options.details) {
-                        text += "PERMS | COUNT | OWNER   | GROUP   | File\n";
+                        text += "  PERMS   | COUNT | OWNER   | GROUP   | File\n";
                         for (let i = 0; i < is.length; i++) {
                             let it = null;
                             if (is[i] == "..") {
@@ -244,10 +244,10 @@ class LSApp extends BaseApp {
                             }
                             if (it != null) {
                                 let p = it.getPerms();
-                                text += " " + p.owner + "" + p.group + "" + p.other + "   ";
-                                text += " COUNT   ";
-                                text += padCutString(it.getOwner(), 8) + " ";
-                                text += padCutString(it.getGroup(), 8) + " ";
+                                text += it.getPermString(false) + " ";
+                                text += padCutString("   " + (it.getChildCount(this,true) + 1),8);
+                                text += padCutString(" " + it.getOwner(), 10);
+                                text += padCutString(" " + it.getGroup(), 10);
                                 text += ' ' + fnc[i] + '\n';
                             }
                         }
@@ -546,6 +546,7 @@ class CHMODApp extends BaseApp {
             silent: false,
             files: true,
             directories: true,
+            match: false,
         }
         this.switches = {
             changes: {
@@ -563,13 +564,13 @@ class CHMODApp extends BaseApp {
             verbose: {
                 desc: "output for all files run against",
                 alias: "v",
-                option: "changes",
+                option: "verbose",
                 type: "bool",
             },
             recursive: {
                 desc: "recurse down through directories",
                 alias: "R",
-                option: "changes",
+                option: "recursive",
                 type: "bool",
             },
             "only-files": {
@@ -584,6 +585,12 @@ class CHMODApp extends BaseApp {
                 option: "files",
                 type: "bool",
             },
+            match: {
+                desc: "only modify items that match this string (can use wildcards at start or end)",
+                alias: "m",
+                option: "match",
+                type: "arg",
+            }
         };
     }
 
@@ -601,27 +608,85 @@ class CHMODApp extends BaseApp {
         let numReg = new RegExp('^[0-7]+$');
 
         if (read.length == 2) {
-            var p1 = (read[0].length == 3 && numReg.test(read[0]));
-            var p2 = (read[1].length == 3 && numReg.test(read[1]));
-            if (p1 && p2) {
+            let p1 = (read[0].length == 3 && numReg.test(read[0]));
+            let p2 = (read[1].length == 3 && numReg.test(read[1]));
 
-                p1 = buildPath(read[0],this);
-                p1 = buildPath(read[0],this);
-                
-            } else if (p1 || p2) {
-                perms = p1 ? read[0] : read[1];
-                path = p1 ? read[1] : read[0];
-            } else {
+            if (p1 && p2) {
+                let p = buildPath(read[0], this).split("/");
+                p.pop();
+                let dir = FS.getChildPath(this, p.join("/"));
+
+                if (dir.isDirectory()) {
+                    //writeLine([dir.getChildren(this).indexOf(read[0]) >= 0,read[0]]);
+                    p1 = !(dir.getChildren(this).indexOf(read[0]) >= 0);
+                }
+
+            } else if (!p1 && !p2) {
                 throw new Error("Invalid Parameters");
             }
 
-            path = buildPath(path,this);
+            perms = p1 ? read[0] : read[1];
+            path = p1 ? read[1] : read[0];
 
+            path = buildPath(path, this).split("/");
+            let fn = path.pop();
+            path = path.join("/");
+
+            let dir = FS.getChildPath(this, path);
+
+            if (dir.isDirectory()) {
+                this.setPerms(dir, fn, perms);
+                cb();
+                return;
+            }
         }
 
         throw new Error("Invalid Parameters");
     }
+
+    setPerms(dir, name, perms, all) {
+        if (all !== true) all = false;
+        let kids = dir.getChildren(this);
+        for (let i = 0; i < kids.length; i++) {
+            let n = kids[i];
+            //writeLine(n + "    ==    " + name);
+            if ((all || wildMatch(n,name)) && (this.options.match === false || wildMatch(n,this.options.match))) {
+                let item = dir.getChild(this, n);
+                if (item.isFile() && this.options.files) {
+                    try {
+                        let c = item.setPerms(this, perms);
+                        if (c && this.options.changes || this.options.verbose) {
+                            writeLine((c ? "Modified" : "Skipped ") + " : " + item.getPath());
+                        }
+                    } catch (e) {
+                        if (!this.options.silent) {
+                            writeLine("Failed to modify: " + item.getPath());
+                        }
+                    }
+                } else if (item.isDirectory() && this.options.directories) {
+                    if(this.options.recursive){
+                        this.setPerms(item,"",perms,true);
+                    }
+                    try {
+                        let c = item.setPerms(this, perms);
+                        if (c && this.options.changes || this.options.verbose) {
+                            writeLine((c ? "Modified" : "Skipped ") + " : " + item.getPath());
+                        }
+                    } catch (e) {
+                        if (!this.options.silent) {
+                            writeLine("Failed to modify: " + item.getPath());
+                        }
+                    }
+                }
+            }
+        }
+
+    }
 }
 class CHOWNApp extends BaseApp {
 
+}
+
+class RMApp extends BaseApp {
+    
 }

@@ -19,9 +19,9 @@ class CallerInterface {
         caller.getCWD = function() { return _cwd; };
         caller.setCWD = function(str) { _cwd = str; };
         caller.runApp = function(app, input, _cb) {
+            let done = 0;
             try {
                 app = new app(caller.getUserIdentity());
-                let done = 0;
                 var cb = function(output) {
                     if (done > 0) {
                         console.log("[" + app.constructor.name + "] CallBack(" + done + "): ", output);
@@ -34,7 +34,9 @@ class CallerInterface {
                 app.run(input, cb);
             } catch (e) {
                 console.log(e);
-                _cb(e);
+                if (done < 1) {
+                    _cb(e);
+                }
             }
         }
     }

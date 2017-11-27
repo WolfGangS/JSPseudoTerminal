@@ -1,5 +1,9 @@
 var FS;
 
+function permAsString(p){
+    return (p & 4 ?"r":"-") + (p & 2 ?"w":"-") + (p & 1 ?"x":"-");
+}
+
 class FSItem {
     constructor(caller, parent, type, name) {
         caller = caller.getUserIdentity();
@@ -65,6 +69,13 @@ class FSItem {
                 other: _perms.other,
             };
         }
+        this.getPermString = function(short){
+            if(short){
+                return _perms.owner + "" + _perms.group + "" + _perms.other;
+            } else {
+                return (this.isDirectory() ? "d":"-") + permAsString(_perms.owner) + permAsString(_perms.group) + permAsString(_perms.other);
+            }
+        }
         this.setPerms = function(caller, perm) {
             caller = caller.getUserIdentity();
             if (caller.getName() == "root" || caller.getName() == _owner) {
@@ -75,13 +86,18 @@ class FSItem {
                     if (o > 7) o = 7;
                     if (g > 7) g = 7;
                     if (u > 7) u = 7;
-                    _perms.owner = o;
-                    _perms.group = g;
-                    _perms.other = u;
+                    if (o != _perms.owner || g != _perms.group || u != _perms.other) {
+                        _perms.owner = o;
+                        _perms.group = g;
+                        _perms.other = u;
+                        return true;
+                    }
+                    return false;
+                } else {
+                    throw new Error("INVALID PERMISSION FORMAT");
                 }
             } else {
                 throw new Error("PERMISSION VIOLATION");
-                return;
             }
         }
         let _owner = caller.getName();
@@ -151,7 +167,9 @@ class FSItem {
         if (this.canExec(caller) && typeof this.getContent(caller) == "function") return "0f0";
         return "fff";
     }
-
+    getChildCount(){
+        return 0;
+    }
 }
 
 class FSFile extends FSItem {
@@ -239,6 +257,19 @@ class FSDir extends FSItem {
             return null;
         };
 
+        this.getChildCount = function(caller, recursive) {
+            let c = 0;
+            var ks = Object.keys(_children);
+            for (let i = 0; i < ks.length; i++) {
+                let n = ks[i];
+                if (_children[n].isDirectory() && recursive) {
+                    c += _children[n].getChildCount(caller, recursive);
+                }
+                c++;
+            }
+            return c;
+        }
+
         /**
          * Gets a list of the itsm in this directory.
          * @param  {String} url
@@ -262,6 +293,7 @@ class FSDir extends FSItem {
                 }
 
             }
+            return [];
         };
     }
 }

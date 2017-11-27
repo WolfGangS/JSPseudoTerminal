@@ -29,6 +29,7 @@ var GlobalApps = {
     ping: PingApp,
     mv: MVApp,
     cp: CPApp,
+    rm: RMApp,
 };
 
 function getAppList(caller) {
