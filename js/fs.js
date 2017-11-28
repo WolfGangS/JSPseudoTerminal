@@ -1,7 +1,7 @@
 var FS;
 
-function permAsString(p){
-    return (p & 4 ?"r":"-") + (p & 2 ?"w":"-") + (p & 1 ?"x":"-");
+function permAsString(p) {
+    return (p & 4 ? "r" : "-") + (p & 2 ? "w" : "-") + (p & 1 ? "x" : "-");
 }
 
 class FSItem {
@@ -69,11 +69,11 @@ class FSItem {
                 other: _perms.other,
             };
         }
-        this.getPermString = function(short){
-            if(short){
+        this.getPermString = function(short) {
+            if (short) {
                 return _perms.owner + "" + _perms.group + "" + _perms.other;
             } else {
-                return (this.isDirectory() ? "d":"-") + permAsString(_perms.owner) + permAsString(_perms.group) + permAsString(_perms.other);
+                return (this.isDirectory() ? "d" : "-") + permAsString(_perms.owner) + permAsString(_perms.group) + permAsString(_perms.other);
             }
         }
         this.setPerms = function(caller, perm) {
@@ -167,7 +167,7 @@ class FSItem {
         if (this.canExec(caller) && typeof this.getContent(caller) == "function") return "0f0";
         return "fff";
     }
-    getChildCount(){
+    getChildCount() {
         return 0;
     }
 }
@@ -295,5 +295,26 @@ class FSDir extends FSItem {
             }
             return [];
         };
+
+        this.recursiveChildren = function(caller, type) {
+            if (typeof type !== "string") type = null;
+            let _it = [];
+            if (this.canAccess(caller) && this.canRead(caller)) {
+                let ks = Object.keys(_children);
+                for (let i = 0; i < ks.length; i++) {
+                    let n = ks[i];
+                    if (_children[n].getType() == type || type === null) {
+                        _it.push(_children[n]);
+                    }
+                    if (_children[n].isDirectory()) {
+                        let __it = _children[n].recursiveChildren(caller, type);
+                        if(__it.length > 0){
+                            _it.push(...__it);
+                        }
+                    }
+                }
+            }
+            return _it;
+        }
     }
 }

@@ -30,6 +30,7 @@ var GlobalApps = {
     mv: MVApp,
     cp: CPApp,
     rm: RMApp,
+    rec: RECApp,
 };
 
 function getAppList(caller) {
@@ -272,7 +273,7 @@ function writeSlow(text, col, cb) {
 function write(txt, col, prefix, suffix) {
     let t = typeof txt;
     if (t !== "string") {
-        console.log(t);
+        console.log(t,txt);
         switch (t) {
             case "object":
                 t = t.constructor.name;
