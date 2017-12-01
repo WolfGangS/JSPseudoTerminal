@@ -226,6 +226,7 @@ class LSApp extends BaseApp {
                                 it = item.getChild(this, is[i]);
                             }
                             if (it != null) {
+                                //TODO: BAD BAD BAD BAD BAD
                                 fnc.push('<span style="color:#' + it.colorCode(this) + '">' + is[i] + "</span>");
                             }
                         }
@@ -683,6 +684,25 @@ class CHMODApp extends BaseApp {
 
     }
 }
+
+class RECApp extends BaseApp {
+    main(cb){
+        let path = this.params.clean[0];
+        if (typeof path !== "string") {
+            path = "";
+        }
+        path = buildPath(path, this);
+        let dir = FS.getChildPath(this,path);
+        if(dir.isDirectory()){
+            let items = dir.recursiveChildren(this);
+            for(let i = 0; i < items.length;i++){
+                writeLine(items[i].getPath());
+            }
+        }
+        cb();
+    }
+}
+
 class CHOWNApp extends BaseApp {
 
 }
