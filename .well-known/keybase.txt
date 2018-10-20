@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/wolfgangs
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://wlf.io
+  * I am wolfgangs (https://keybase.io/wolfgangs) on keybase.
+  * I have a public key ASB_hWh0IhOAdDo1zhkVVS-tU3TGFiwtm0Po9l0nyPqGrAo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01207f856874221380743a35ce1915552fad5374c6162c2d9b43e8f65d27c8fa86ac0a",
+      "host": "keybase.io",
+      "kid": "01207f856874221380743a35ce1915552fad5374c6162c2d9b43e8f65d27c8fa86ac0a",
+      "uid": "51d8b224bfeeeba14ecbb40dfc0a3719",
+      "username": "wolfgangs"
+    },
+    "merkle_root": {
+      "ctime": 1523139241,
+      "hash": "29fc3b5dbd92dd674afd77323775bc7798117cc2bc216fe08c06223c1314333699f5e2ee97f4390727cc9f21d8ccda2d8eb77b0e3d81072ee3088a71399fe9c4",
+      "hash_meta": "e7b8b8fa159a68b443b9b99d7d140e00b96271b4a6396248ed1df4c25464e8f9",
+      "seqno": 2352729
+    },
+    "service": {
+      "entropy": "Vt5vGtMZXKjVrb0lOTgrYI76",
+      "hostname": "wlf.io",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "1.0.47"
+  },
+  "ctime": 1523139252,
+  "expire_in": 504576000,
+  "prev": "7f17ddebfc460c71bcff429fc90c919d58a0f85ed38be47a27b93b34af6ad5ed",
+  "seqno": 24,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgf4VodCITgHQ6Nc4ZFVUvrVN0xhYsLZtD6PZdJ8j6hqwKp3BheWxvYWTESpcCGMQgfxfd6/xGDHG8/0KfyQyRnVig+F7Ti+R6J7k7NK9q1e3EIMALQnuLWXga35Sip+PZTTUwMnSRn8J6s7QXCjkOpuGBAgHCo3NpZ8RAPxJNZizjawX0fKskoUrZO5N5qt49EPZfFk+4CBghooM5ku5mBv7fbILdQwaVXukTzbxiiAh+C5mIeKIQIMuSAKhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIFeuzJ3vW63sGEOooYOqGyuJMWaO5KCWJsMMaBz+nHITo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/wolfgangs
+
+==================================================================
